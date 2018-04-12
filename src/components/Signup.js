@@ -27,7 +27,6 @@ class Signup extends Component {
   }
 
   render() {
-  	console.log(this.props);
     var style = {
         display: this.props.visible? 'initial': 'none'
     }

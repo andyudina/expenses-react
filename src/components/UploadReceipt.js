@@ -34,6 +34,8 @@ const UploadReceipt = (props) => {
              name="receipt" 
              type="file" 
              ref={node => file = node}/>
+        </div>
+        <div>
           <button type="submit">
             Upload
           </button>
