@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import Header from './Header'
-import LoginSignupView from './LoginSignupView'
+import AnonymousView from '../containers/AnonymousView'
+import LoggedinView from '../containers/LoggedinView'
 
 class App extends Component {
   render() {
     return (
       <div>
-          <Header />
-          <div>
-              <LoginSignupView />
-          </div>
+        <AnonymousView />
+        <LoggedinView />
       </div>
     );
   }

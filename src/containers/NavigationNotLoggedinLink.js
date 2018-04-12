@@ -3,7 +3,7 @@ import { switchToLoginOrSignup } from '../actions'
 import Link from '../components/Link'
 
 const mapStateToProps = (state, ownProps) => ({
-  active: ownProps.action === state.navigation
+  active: ownProps.action === state.navigationAnonymous
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
-import navigation from './navigation'
+import navigationLoggedin from './navigationLoggedin'
+import navigationAnonymous from './navigationAnonymous'
 import user from './user'
 import forms from './forms'
 
 export default combineReducers({
-	navigation,
+	navigationLoggedin,
+	navigationAnonymous,
 	user,
 	forms
 })

@@ -3,7 +3,7 @@ import { trySignup, LoginOrSignUpActions } from '../actions'
 import Signup from '../components/Signup'
 
 const mapStateToProps = (state, ownProps) => ({
-  visible: state.navigation === LoginOrSignUpActions.SIGNUP,
+  visible: state.navigationAnonymous === LoginOrSignUpActions.SIGNUP,
   error: state.forms.signupError,
 })
 

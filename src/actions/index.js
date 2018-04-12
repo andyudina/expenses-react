@@ -18,6 +18,8 @@ export const trySignup = (email, password, repeat_password) => ({
   repeat_password: repeat_password,
 })
 
+export const DEFAULT_NAVIGATION = 'DEAFULT'
+
 export const LoginOrSignUpActions = {
   LOGIN: 'LOGIN',
   SIGNUP: 'SIGNUP'

@@ -1,4 +1,4 @@
-const navigation = (state = 'LOGIN', action) => {
+const navigationAnonymous = (state = 'LOGIN', action) => {
   switch (action.type) {
     case 'SWITCH_TO_LOGIN_OR_SIGNUP':
       return action.action
@@ -7,4 +7,4 @@ const navigation = (state = 'LOGIN', action) => {
   }
 }
 
-export default navigation
+export default navigationAnonymous
