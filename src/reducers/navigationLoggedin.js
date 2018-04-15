@@ -9,6 +9,8 @@ const navigationLoggedin = (
   	  	return 'CREATE_EXPENSES'
   	  }
   	  return state
+  	case 'SWITCH_TO_NEW_VIEW':
+  	  return action.action
     default:
       return state
   }

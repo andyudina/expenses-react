@@ -60,3 +60,7 @@ export const submitExpenses = (expenses) => ({
   expenses: expenses
 })
 
+export const switchToNewView = (action) => ({
+  type: 'SWITCH_TO_NEW_VIEW',
+  action: action
+})
