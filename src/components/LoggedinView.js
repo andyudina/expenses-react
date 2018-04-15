@@ -1,6 +1,7 @@
 import React from 'react'
 import LoggedinHeader from './LoggedinHeader'
 import UploadReceipt from '../containers/UploadReceipt'
+import CreateExpenses from '../containers/CreateExpenses'
 
 const LoggedinView = (props) => {
   let style = {
@@ -11,6 +12,7 @@ const LoggedinView = (props) => {
   <div style={style}>
     <LoggedinHeader />
     <UploadReceipt />
+    <CreateExpenses />
   </div>)
 }
 

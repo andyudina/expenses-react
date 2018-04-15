@@ -11,8 +11,7 @@ const UploadReceipt = (props) => {
 
   let file
 
-  return (
-  
+  return ( 
   <div style={style}>
       <div>
           <span>Upload receipt</span>

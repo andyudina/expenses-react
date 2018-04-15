@@ -3,7 +3,7 @@ import AnonymousView from '../components/AnonymousView'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-      visible: state.user.loggedIn == false
+      visible: state.user.loggedIn === false
   }
 }
 

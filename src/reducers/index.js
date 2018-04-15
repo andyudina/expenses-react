@@ -3,10 +3,12 @@ import navigationLoggedin from './navigationLoggedin'
 import navigationAnonymous from './navigationAnonymous'
 import user from './user'
 import forms from './forms'
+import expenses from './expenses'
 
 export default combineReducers({
 	navigationLoggedin,
 	navigationAnonymous,
 	user,
-	forms
+	forms,
+	expenses,
 })

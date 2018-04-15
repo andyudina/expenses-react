@@ -1,27 +1,25 @@
+import { isSignupDataValid, isLoginDataValid } from './_loginAndSignUp'
+
 let defaultUser = {
-  'loggedIn': false
+  'loggedIn': true //false // for tests ONLY
 }
 
 const trySignUp = (email, password, repeat_password) => {
-  if (!email || !password || !repeat_password) {
-    return
+  if (isSignupDataValid(email, password, repeat_password)) {
+    return {
+      'loggedIn': true,
+      'email': email,
+    }
   }
-  if (repeat_password !== password) {
-    return
-  }
-  return {
-    'loggedIn': true,
-    'email': email,
-  }
+  return
 }
 
 const tryLogIn = (email, password) => {
-  if (!email || !password) {
-    return
-  }
-  return {
-    'loggedIn': true,
-    'email': email
+  if (isLoginDataValid(email, password)) {
+    return {
+      'loggedIn': true,
+      'email': email
+    }
   }
 }
 

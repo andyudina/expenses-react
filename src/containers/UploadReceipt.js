@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { LoggedInActions } from '../actions'
+import { LoggedInActions, tryUploadFile } from '../actions'
 import UploadReceipt from '../components/UploadReceipt'
 
 const mapStateToProps = (state, ownProps) => {
@@ -9,6 +9,11 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onSubmit: (file) => dispatch(tryUploadFile(file))
+})
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(UploadReceipt)

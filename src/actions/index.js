@@ -18,6 +18,11 @@ export const trySignup = (email, password, repeat_password) => ({
   repeat_password: repeat_password,
 })
 
+export const tryUploadFile = (file) => ({
+  type: 'TRY_UPLOAD_FILE',
+  file: file,
+})
+
 export const LoginOrSignUpActions = {
   LOGIN: 'LOGIN',
   SIGNUP: 'SIGNUP'
@@ -25,6 +30,33 @@ export const LoginOrSignUpActions = {
 
 export const LoggedInActions = {
   UPLOAD: 'UPLOAD',
-  VIEW_EXPENSES: 'VIEW_EXPENSES'
+  VIEW_EXPENSES: 'VIEW_EXPENSES',
+  CREATE_EXPENSES: 'CREATE_EXPENSES'
 }
+
+export const addExpense = () => ({
+  type: 'ADD_EXPENSE',
+})
+
+export const deleteExpense = (key) => ({
+  type: 'REMOVE_EXPENSE',
+  key: key,
+})
+
+export const setDate = (date) => ({
+  type: 'SET_DATE',
+  date: date,
+})
+
+export const changeExpense = (index, name, value) => ({
+  type: 'CHANGE_EXPENSE',
+  index: index,
+  name: name,
+  value: value,
+})
+
+export const submitExpenses = (expenses) => ({
+  type: 'SUBMIT_EXPENSES',
+  expenses: expenses
+})
 
