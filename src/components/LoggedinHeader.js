@@ -7,6 +7,9 @@ const LoggedinHeader = () => (
     <NavigationLoggedinLink action={LoggedInActions.UPLOAD}>
       Upload Receipt
     </NavigationLoggedinLink>
+    <NavigationLoggedinLink action={LoggedInActions.SHOW_EXPENSES}>
+      Show expenses
+    </NavigationLoggedinLink>
   </div>
 )
 

@@ -4,6 +4,7 @@ import navigationAnonymous from './navigationAnonymous'
 import user from './user'
 import forms from './forms'
 import expenses from './expenses'
+import spendings from './spendings'
 
 export default combineReducers({
 	navigationLoggedin,
@@ -11,4 +12,5 @@ export default combineReducers({
 	user,
 	forms,
 	expenses,
+	spendings,
 })

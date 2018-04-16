@@ -30,7 +30,7 @@ export const LoginOrSignUpActions = {
 
 export const LoggedInActions = {
   UPLOAD: 'UPLOAD',
-  VIEW_EXPENSES: 'VIEW_EXPENSES',
+  SHOW_EXPENSES: 'SHOW_EXPENSES',
   CREATE_EXPENSES: 'CREATE_EXPENSES'
 }
 
@@ -63,4 +63,10 @@ export const submitExpenses = (expenses) => ({
 export const switchToNewView = (action) => ({
   type: 'SWITCH_TO_NEW_VIEW',
   action: action
+})
+
+export const changeDateRange = (dateType, value) => ({
+  type: 'CHANGE_SPENDINGS_DATE_RANGE',
+  dateType: dateType,
+  value: value,
 })

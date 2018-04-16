@@ -1,7 +1,7 @@
 import { isFileValid } from './_fileUpload'
 
 const navigationLoggedin = (
-	state = 'CREATE_EXPENSES', //'UPLOAD', for tests only 
+	state = 'SHOW_EXPENSES', //'UPLOAD', for tests only 
 	action) => {
   switch (action.type) {
   	case 'TRY_UPLOAD_FILE':
