@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { changeDateRange } from '../actions'
-import ShowExpensesView from '../components/ShowExpensesView'
+import { changeDateRange } from 'actions'
+import ShowExpensesView from 'components/logged-in/show-expenses/ShowExpensesView'
 
 const mapStateToProps = (state, ownProps) => ({
   dateRange: state.spendings.dateRange,

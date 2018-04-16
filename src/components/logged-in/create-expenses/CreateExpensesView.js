@@ -1,6 +1,6 @@
 import React from 'react'
-import ExpenseDate from './ExpenseDate'
-import Expense from './Expense'
+import ExpenseDate from 'components/logged-in/create-expenses/ExpenseDate'
+import Expense from 'components/logged-in/create-expenses/Expense'
 
 const CreateExpensesView = ({
     date, 

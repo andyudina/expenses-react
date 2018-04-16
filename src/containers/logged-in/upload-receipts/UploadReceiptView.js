@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { tryUploadFile, cleanSuccessfullyUploadedState } from 'actions'
-import UploadReceiptView from 'components/UploadReceiptView'
+import UploadReceiptView from 'components/logged-in/upload-receipts/UploadReceiptView'
 
 const mapStateToProps = (state, ownProps) => {
   return {

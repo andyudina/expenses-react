@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { trySignup } from '../actions'
-import SignupView from '../components/SignupView'
+import { trySignup } from 'actions'
+import SignupView from 'components/not-logged-in/SignupView'
 
 const mapStateToProps = (state, ownProps) => ({
   error: state.forms.signupError,

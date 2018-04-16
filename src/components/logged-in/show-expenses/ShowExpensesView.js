@@ -1,6 +1,6 @@
 import React from 'react';
-import PieChart from './PieChart';
-import ExpensesDateRange from './ExpensesDateRange';
+import PieChart from 'components/logged-in/show-expenses/PieChart';
+import ExpensesDateRange from 'components/logged-in/show-expenses/ExpensesDateRange';
 
 const ShowExpensesView = ({dateRange, expenses, changeDateRange}) => {
   let expensiveSpendingsData = expenses.spendings.map(

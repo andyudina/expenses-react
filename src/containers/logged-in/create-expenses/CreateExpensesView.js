@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import { 
   addExpense, deleteExpense, 
-  setDate, changeExpense, submitExpenses} from '../actions'
-import CreateExpensesView from '../components/CreateExpensesView'
+  setDate, changeExpense, submitExpenses} from 'actions'
+import CreateExpensesView from 'components/logged-in/create-expenses/CreateExpensesView'
 
 const mapStateToProps = (state, ownProps) => ({
   date: state.expenses.date, 

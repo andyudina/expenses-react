@@ -3,11 +3,11 @@ import { BrowserRouter,
          Switch }         from 'react-router-dom'
 import LoggedinRoute from 'containers/LoggedinRoute'
 import NotLoggedinRoute from 'containers/NotLoggedinRoute'   
-import LoginView from 'containers/LoginView'
-import SignupView from 'containers/SignupView'
-import UploadReceiptView from 'containers/UploadReceiptView'
-import CreateExpensesView from 'containers/CreateExpensesView'
-import ShowExpensesView from 'containers/ShowExpensesView'
+import LoginView from 'containers/not-logged-in/LoginView'
+import SignupView from 'containers/not-logged-in/SignupView'
+import UploadReceiptView from 'containers/logged-in/upload-receipts/UploadReceiptView'
+import CreateExpensesView from 'containers/logged-in/create-expenses/CreateExpensesView'
+import ShowExpensesView from 'containers/logged-in/show-expenses/ShowExpensesView'
 
 const Router = ({location}) => (
     <BrowserRouter>
