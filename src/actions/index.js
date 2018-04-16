@@ -23,17 +23,6 @@ export const tryUploadFile = (file) => ({
   file: file,
 })
 
-export const LoginOrSignUpActions = {
-  LOGIN: 'LOGIN',
-  SIGNUP: 'SIGNUP'
-}
-
-export const LoggedInActions = {
-  UPLOAD: 'UPLOAD',
-  SHOW_EXPENSES: 'SHOW_EXPENSES',
-  CREATE_EXPENSES: 'CREATE_EXPENSES'
-}
-
 export const addExpense = () => ({
   type: 'ADD_EXPENSE',
 })
@@ -69,4 +58,8 @@ export const changeDateRange = (dateType, value) => ({
   type: 'CHANGE_SPENDINGS_DATE_RANGE',
   dateType: dateType,
   value: value,
+})
+
+export const cleanSuccessfullyUploadedState = () => ({
+  type: 'CLEAN_SUCCESSFULLY_UPLOADED_FILES'
 })

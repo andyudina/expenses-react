@@ -1,16 +1,16 @@
 import { connect } from 'react-redux'
-import { switchToNewView } from '../actions'
-import Link from '../components/Link'
+import { tryLogin } from '../actions'
+import LoginView from '../components/LoginView'
 
 const mapStateToProps = (state, ownProps) => ({
-  active: ownProps.action === state.navigationLoggedin
+  error: state.forms.loginError,
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: () => dispatch(switchToNewView(ownProps.action))
+  onSubmit: (email, password) => dispatch(tryLogin(email, password))
 })
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Link)
+)(LoginView)

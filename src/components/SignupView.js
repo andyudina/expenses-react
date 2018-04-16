@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 
-class Signup extends Component {
+class SignupView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,14 +27,11 @@ class Signup extends Component {
   }
 
   render() {
-    var style = {
-        display: this.props.visible? 'initial': 'none'
-    }
     var errorStyle = {
         display: this.props.error? 'initial': 'none'
     } 
     return (
-          <div style={style}>
+          <div>
              <span>Sign Up</span>
              <div>
                  <span style={errorStyle}>Error: {this.props.error}</span>
@@ -77,4 +74,4 @@ class Signup extends Component {
    }
 }
 
-export default Signup;
+export default SignupView;

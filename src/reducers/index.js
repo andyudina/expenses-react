@@ -1,16 +1,14 @@
 import { combineReducers } from 'redux'
-import navigationLoggedin from './navigationLoggedin'
-import navigationAnonymous from './navigationAnonymous'
-import user from './user'
-import forms from './forms'
-import expenses from './expenses'
-import spendings from './spendings'
+import user from 'reducers/user'
+import forms from 'reducers/forms'
+import expenses from 'reducers/expenses'
+import spendings from 'reducers/spendings'
+import files from 'reducers/files'
 
 export default combineReducers({
-	navigationLoggedin,
-	navigationAnonymous,
-	user,
-	forms,
-	expenses,
-	spendings,
+  user,
+  forms,
+  expenses,
+  spendings,
+  files
 })

@@ -1,9 +1,8 @@
 import { connect } from 'react-redux'
-import { trySignup, LoginOrSignUpActions } from '../actions'
-import Signup from '../components/Signup'
+import { trySignup } from '../actions'
+import SignupView from '../components/SignupView'
 
 const mapStateToProps = (state, ownProps) => ({
-  visible: state.navigationAnonymous === LoginOrSignUpActions.SIGNUP,
   error: state.forms.signupError,
 })
 
@@ -14,4 +13,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Signup)
+)(SignupView)

@@ -1,12 +1,10 @@
 import { connect } from 'react-redux'
 import { 
   addExpense, deleteExpense, 
-  setDate, changeExpense, submitExpenses,
-  LoggedInActions } from '../actions'
-import CreateExpenses from '../components/CreateExpenses'
+  setDate, changeExpense, submitExpenses} from '../actions'
+import CreateExpensesView from '../components/CreateExpensesView'
 
 const mapStateToProps = (state, ownProps) => ({
-  visible: state.navigationLoggedin === LoggedInActions.CREATE_EXPENSES, 
   date: state.expenses.date, 
   expenses: state.expenses.expenses, 
   error: state.forms.createExpensesError,
@@ -24,4 +22,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreateExpenses)
+)(CreateExpensesView)

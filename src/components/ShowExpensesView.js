@@ -2,11 +2,7 @@ import React from 'react';
 import PieChart from './PieChart';
 import ExpensesDateRange from './ExpensesDateRange';
 
-const ShowExpenses = ({visible, dateRange, expenses, changeDateRange}) => {
-  let style = {
-    'display': visible? 'initial': 'none'
-  }
-
+const ShowExpensesView = ({dateRange, expenses, changeDateRange}) => {
   let expensiveSpendingsData = expenses.spendings.map(
     spending => ({
        'angle': spending.total_amount,
@@ -22,7 +18,7 @@ const ShowExpenses = ({visible, dateRange, expenses, changeDateRange}) => {
   );
 
   return (
-    <div style={style}>
+    <div>
       <ExpensesDateRange 
          onChange={
           (e) => changeDateRange(
@@ -42,4 +38,4 @@ const ShowExpenses = ({visible, dateRange, expenses, changeDateRange}) => {
   );
 }
 
-export default ShowExpenses;
+export default ShowExpensesView;

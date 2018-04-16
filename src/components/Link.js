@@ -1,12 +1,11 @@
 import React from 'react'
 
-const Link = ({ active, children, onClick }) => (
-    <button
-       onClick={onClick}
-       disabled={active}
-    >
+const Link = ({to, children}) => (
+  <div>
+    <a href={to}>
       {children}
-    </button>
+    </a>
+  </div>
 )
 
 export default Link

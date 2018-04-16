@@ -2,8 +2,7 @@ import React from 'react'
 import ExpenseDate from './ExpenseDate'
 import Expense from './Expense'
 
-const CreateExpenses = ({
-    visible, 
+const CreateExpensesView = ({
     date, 
     expenses, 
     error,
@@ -14,10 +13,6 @@ const CreateExpenses = ({
     changeExpense,
     submitExpenses,
   }) => {
-  let style = {
-    'display': visible? 'initial': 'none'
-  }
-
   let errorStyle = {
     'display': error? 'initial': 'none'
   }
@@ -31,7 +26,7 @@ const CreateExpenses = ({
   }
 
   return (
-    <div style={style}>
+    <div>
       <div style={errorStyle}>
         Error: {error}
       </div>
@@ -73,5 +68,5 @@ const CreateExpenses = ({
     </div>)
 }
 
-export default CreateExpenses;
+export default CreateExpensesView;
 

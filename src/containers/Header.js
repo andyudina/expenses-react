@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
-import LoggedinView from '../components/LoggedinView'
+import Header from 'components/Header'
 
 const mapStateToProps = (state, ownProps) => ({
-  visible: state.user.loggedIn === true
+  loggedIn: state.user.loggedIn,
 })
 
 export default connect(
   mapStateToProps
-)(LoggedinView)
+)(Header)

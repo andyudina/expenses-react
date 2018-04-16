@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 
-class Login extends Component {
+class LoginView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,14 +24,11 @@ class Login extends Component {
   }
 
   render() {
-    var style = {
-        display: this.props.visible? 'initial': 'none'
-    }
     var errorStyle = {
         display: this.props.error? 'initial': 'none'        
     }
     return (
-          <div style={style}>
+          <div>
              <span>Login</span>
              <div>
                  <span style={errorStyle}>Error: {this.props.error}</span>
@@ -66,4 +63,4 @@ class Login extends Component {
    }
 }
 
-export default Login;
+export default LoginView;

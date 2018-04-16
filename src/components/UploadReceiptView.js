@@ -1,29 +1,36 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom';
 
-const UploadReceipt = (props) => {
-  let style = {
-    display: props.visible? 'initial': 'none'
-  }
-
+const UploadReceiptView = ({
+    error, onSubmit,
+    cleanSuccessfullyUploadedState,
+    fileSuccessfullyUploaded,
+    history
+  }) => {
   let errorStyle = {
-  	display: props.error? 'initial': 'none'
+  	display: error? 'initial': 'none'
   }
 
   let file
 
+  if (fileSuccessfullyUploaded) {
+    cleanSuccessfullyUploadedState();
+    history.push('/create-expenses');
+  }
+
   return ( 
-  <div style={style}>
+  <div>
       <div>
           <span>Upload receipt</span>
       </div>
       <div style={errorStyle}>
-          <span>Error: {props.error}</span>
+          <span>Error: {error}</span>
       </div>      
       <form
          onSubmit={
            e => {
              e.preventDefault();
-             props.onSubmit(file.value)
+             onSubmit(file.value)
              file.value = ''
            }
       }>
@@ -44,4 +51,4 @@ const UploadReceipt = (props) => {
   )
 }
 
-export default UploadReceipt
+export default withRouter(UploadReceiptView)

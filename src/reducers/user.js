@@ -1,7 +1,7 @@
 import { isSignupDataValid, isLoginDataValid } from './_loginAndSignUp'
 
 let defaultUser = {
-  'loggedIn': true //false // for tests ONLY
+  'loggedIn': false // for tests ONLY
 }
 
 const trySignUp = (email, password, repeat_password) => {
