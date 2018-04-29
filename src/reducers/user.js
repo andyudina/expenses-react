@@ -1,5 +1,5 @@
-let defaultUser = {
-  isFetching: false,
+const defaultUser = {
+  isFetching: true,
   loginForm: {
     emailError: false,
     passwordError: false,
@@ -16,7 +16,7 @@ let defaultUser = {
   },
 }
 
-const trySignUp = (email, password, repeatPassword) => {
+const verifySignUp = (email, password, repeatPassword) => {
   let mandatoryParams = {
     email: email,
     password: password,
@@ -26,29 +26,21 @@ const trySignUp = (email, password, repeatPassword) => {
   for (var param in mandatoryParams) {
     if (!(mandatoryParams[param])) {
       errors[param + 'Error'] = 'Please fill in this field'
+    } else {
+      errors[param + 'Error'] = false
     }
   }
   if (password && repeatPassword && password !== repeatPassword) {
     errors['repeatPasswordError'] = 'Passwords should match'
   }
-  let result = {}
-  // login if no errors returned
-  if (Object.keys(errors).length === 0) {
-    result['user'] = {
-      'isLoggedIn': true
-    }
-  } else {
-    result['user'] = {
-      'isLoggedIn': false
-    }
-    result['signupForm'] = Object.assign(
+  return {
+    signupForm: Object.assign(
       errors, {genericError: false})
   }
-  return result
 }
 
 // TODO: refactor copy paste
-const tryLogIn = (email, password) => {
+const verifyLogIn = (email, password) => {
   let mandatoryParams = {
     email: email,
     password: password,
@@ -57,39 +49,121 @@ const tryLogIn = (email, password) => {
   for (var param in mandatoryParams) {
     if (!(mandatoryParams[param])) {
       errors[param + 'Error'] = 'Please fill in this field'
+    } else {
+      errors[param + 'Error'] = false
     }
   }
-  let result = {}
-  // login if no errors returned
-  if (Object.keys(errors).length === 0) {
-    result['user'] = {
-      'isLoggedIn': true
-    }
-  } else {
-    result['user'] = {
-      'isLoggedIn': false
-    }
-    result['loginForm'] = Object.assign(
+  return {
+    loginForm: Object.assign(
       errors, {genericError: false})
   }
-  return result
 }
 
 const user = (state = defaultUser, action) => {
   switch (action.type) {
-    case 'TRY_SIGNUP':
+    case 'VERIFY_SIGNUP':
       return Object.assign(
         {},
         state,
-        trySignUp(
+        verifySignUp(
           action.email, action.password, 
           action.repeatPassword))
-    case 'TRY_LOGIN':
+    case 'VERIFY_LOGIN':
       return Object.assign(
         {},
         state,
-        tryLogIn(
+        verifyLogIn(
           action.email, action.password))
+    case 'RECEIVE_USER_INFO':
+      return Object.assign(
+        {},
+        state,
+        {
+          isFetching: false,
+          user: {
+            isLoggedIn: true
+          }
+        })
+    case 'REQUEST_USER_INFO':
+      return Object.assign(
+        {},
+        state,
+        {
+          isFetching: true,
+        })
+    case 'LOGIN_FAILED':
+      return Object.assign(
+        {},
+        state,
+        {
+          isFetching: false,
+          loginForm: Object.assign(
+            {},
+            state.loginForm,
+            {
+              genericError: action.error
+            }),
+          user: {
+            isLoggedIn: false
+          }
+        })
+
+    case 'SIGNUP_FAILED':
+      return Object.assign(
+        {},
+        state,
+        {
+          isFetching: false,
+          signupForm: Object.assign(
+            {},
+            state.signupForm,
+            {
+              genericError: action.error
+            }),
+          user: {
+            isLoggedIn: false
+          }
+        })
+
+    case 'RETRIEVE_CURRENT_USER_FAILED':
+      return Object.assign(
+        {},
+        state,
+        {
+          isFetching: false,
+          user: {
+            isLoggedIn: false
+          }
+        })
+
+    case 'LOGIN_SUCCEED':
+      return Object.assign(
+        {},
+        state,
+        {
+          isFetching: false,
+          loginForm: Object.assign(
+            {},
+            defaultUser.loginForm),
+          user: {
+            isLoggedIn: true
+          }
+        })
+
+    case 'SIGNUP_SUCCEED':
+      return Object.assign(
+        {},
+        state,
+        {
+          isFetching: false,
+          signupnForm: Object.assign(
+            {},
+            defaultUser.signupForm),
+          user: {
+            isLoggedIn: true
+          }
+        })
+
     default:
       return state
   }

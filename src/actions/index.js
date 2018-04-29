@@ -5,19 +5,6 @@ export const switchToLoginOrSignup = (action) => ({
   action: action
 })
 
-export const tryLogin = (email, password) => ({
-  type: 'TRY_LOGIN',
-  email: email,
-  password: password
-})
-
-export const trySignup = (email, password, repeatPassword) => ({
-  type: 'TRY_SIGNUP',
-  email: email,
-  password: password,
-  repeatPassword: repeatPassword,
-})
-
 export const tryUploadFile = (file) => ({
   type: 'TRY_UPLOAD_FILE',
   file: file,

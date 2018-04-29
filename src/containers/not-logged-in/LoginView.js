@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { tryLogin } from 'actions'
+import { attemptLogin } from 'actions/user'
 import LoginView from 'components/not-logged-in/LoginView'
 
 const mapStateToProps = (state, ownProps) => ({
@@ -7,7 +7,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: (email, password) => dispatch(tryLogin(email, password))
+  onSubmit: (email, password) => dispatch(attemptLogin(email, password))
 })
 
 export default connect(
