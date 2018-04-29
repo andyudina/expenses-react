@@ -11,7 +11,7 @@ export const SIGNUP_SUCCEED = 'SIGNUP_SUCCEED'
 export const VERIFY_LOGIN = 'VERIFY_LOGIN'
 export const VERIFY_SIGNUP = 'VERIFY_SIGNUP'
 
-console.log(SERVER_URL)
+
 const BASE_USER_API_URL = SERVER_URL + 'users/'
 
 
@@ -48,8 +48,16 @@ export function getCurrentUser() {
   // Retrieve information about current user from server
   return (dispatch) => {
     dispatch(requestUserInfo())
-    return fetch(BASE_USER_API_URL)
-      .then(response => response.json())
+    return fetch(BASE_USER_API_URL, {
+        credentials: 'include',
+      })
+      .then(response => {
+        if (response.status >= 400) {
+          console.log(response)
+          throw new Error(response.data);
+        }
+        return response.json()
+      })
       .then(json => dispatch(receiveUserInfo(json)))
       .catch(err => {
         console.log(err)
@@ -70,45 +78,111 @@ function successfullySignedUp() {
   }
 }
 
-function loginFailed(error) {
-  console.log(error)
+function loginFailed(errors) {
   return {
     type: LOGIN_FAILED,
-    error: error
+    errors: errors
   }
 }
 
-function signupFailed(error) {
-  console.log(error)
+function signupFailed(errors) {
   return {
     type: SIGNUP_FAILED,
-    error: error
+    errors: errors
   }
 }
 
+function _getErrors(errorDict) {
+  // translate django errors dict
+  // to errors, undertandable by app
+  let errors = {}
+  for (var error in errorDict) {
+    if (error === 'non_field_errors') {
+      // django assumes that each field can have more tha one error
+      // it's not true for our app, so we just take first
+      errors['genericError'] = errorDict[error][0]
+    } else {
+      errors[error + 'Error'] = errorDict[error][0]
+    }
+  }
+  return errors
+}
+
+//TODO: refactor fetch boilerplate logic
 function login(email, password) {
   // Login user
   return (dispatch) => {
     dispatch(requestUserInfo())
     return fetch(BASE_USER_API_URL + 'login/', {
-        method: 'POST',
-        body: 'email=' + email + '&password=' + password
+        method: 'post',
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
       })
-      .then(response => dispatch(successfullyLoggedIn()))
-      .catch(err => dispatch(loginFailed(err)))
+      .then(response => {
+        console.log(response)
+        if (response.status > 400) {
+          // unknown error occured
+          throw new Error('Unknown error. Please contact the support')
+        } else if (response.status === 400) {
+          // server send valid error
+          // TODO: this flow is fucking mess
+          // how can I refactor it?
+          response.json()
+            .then(json => dispatch(loginFailed(_getErrors(json))))
+        } else {
+          response.json()
+            .then(json => dispatch(successfullyLoggedIn()))
+        }
+      })
+      .catch(err => {
+        dispatch(loginFailed(err.message))
+      })
   }
 }
 
+// TODO: Regactor this fucking copy paste
 function signUp(email, password) {
   // Signup new user
   return (dispatch) => {
     dispatch(requestUserInfo())
     return fetch(BASE_USER_API_URL + 'signup/', {
-        method: 'POST',
-        body: 'email=' + email + '&password=' + password
+        method: 'post',
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
       })
-      .then(response => dispatch(successfullySignedUp()))
-      .catch(err => dispatch(signupFailed(err)))
+      .then(response => {
+        console.log(response)
+        if (response.status > 400) {
+          // unknown error occured
+          throw new Error('Unknown error. Please contact the support')
+        } else if (response.status === 400) {
+          // server send valid error
+          // TODO: this flow is fucking mess
+          // how can I refactor it?
+          response.json()
+            .then(json => dispatch(signupFailed(_getErrors(json))))
+        } else {
+          response.json()
+            .then(json => dispatch(successfullySignedUp()))
+        }
+      })
+      .catch(err => {
+        dispatch(loginFailed(err.message))
+      })
   }
 }
 
@@ -140,11 +214,11 @@ export function attemptLogin(email, password) {
   // Validates email and password and sends
   // request to the server
   return (dispatch) => {
-    dispatch(verifyLogin())
+    dispatch(verifyLogin(email, password))
     if (!(_canLogin(email, password))) {
       return
     }
-    return login(email, password)
+    return dispatch(login(email, password))
   }
 }
 
@@ -153,10 +227,10 @@ export function attemptSignUp(email, password, repeatPassword) {
   // Validates input data
   // and sends request to the server
   return (dispatch) => {
-    dispatch(verifySignup())
+    dispatch(verifySignup(email, password, repeatPassword))
     if (!(_canSignUp(email, password, repeatPassword))) {
       return
     }
-    return signUp(email, password, repeatPassword)
+    return dispatch(signUp(email, password, repeatPassword))
   }
 }

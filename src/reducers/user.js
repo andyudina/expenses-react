@@ -100,9 +100,7 @@ const user = (state = defaultUser, action) => {
           loginForm: Object.assign(
             {},
             state.loginForm,
-            {
-              genericError: action.error
-            }),
+            action.errors),
           user: {
             isLoggedIn: false
           }
@@ -117,9 +115,8 @@ const user = (state = defaultUser, action) => {
           signupForm: Object.assign(
             {},
             state.signupForm,
-            {
-              genericError: action.error
-            }),
+            action.errors
+          ),
           user: {
             isLoggedIn: false
           }

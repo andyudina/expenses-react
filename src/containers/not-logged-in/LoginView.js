@@ -7,7 +7,9 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: (email, password) => dispatch(attemptLogin(email, password))
+  onSubmit: (email, password) => {
+    dispatch(attemptLogin(email, password))
+  }
 })
 
 export default connect(
