@@ -3,7 +3,7 @@ import { tryLogin } from 'actions'
 import LoginView from 'components/not-logged-in/LoginView'
 
 const mapStateToProps = (state, ownProps) => ({
-  error: state.forms.loginError,
+  errors: state.user.loginForm,
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

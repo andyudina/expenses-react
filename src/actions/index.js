@@ -11,11 +11,11 @@ export const tryLogin = (email, password) => ({
   password: password
 })
 
-export const trySignup = (email, password, repeat_password) => ({
+export const trySignup = (email, password, repeatPassword) => ({
   type: 'TRY_SIGNUP',
   email: email,
   password: password,
-  repeat_password: repeat_password,
+  repeatPassword: repeatPassword,
 })
 
 export const tryUploadFile = (file) => ({

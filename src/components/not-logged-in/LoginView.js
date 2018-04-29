@@ -24,28 +24,44 @@ class LoginView extends Component {
   }
 
   render() {
-    var errorStyle = {
-        display: this.props.error? 'initial': 'none'        
+    let errorStyle = {
+        genericError: {
+          display: this.props.errors.genericError? 'initial': 'none'
+        },
+        emailError: {
+          display: this.props.errors.emailError? 'initial': 'none'
+        },
+        passwordError: {
+          display: this.props.errors.passwordError? 'initial': 'none'
+        },
     }
     return (
           <div>
              <span>Login</span>
              <div>
-                 <span style={errorStyle}>Error: {this.props.error}</span>
+                <span style={errorStyle.genericError}>
+                  Error: {this.props.errors.genericError}
+                </span>
              </div>
              <form
                 onSubmit={e => this.onSubmit(e)}
              >
                  <div>
-                     <span>email</span>
-                     <input 
+                    <span>Email </span>
+                    <span style={errorStyle.emailError}>
+                      Error: {this.props.errors.emailError}
+                    </span>
+                    <input 
                          name="email" 
                          type="email"
                          value={this.state.email}
                          onChange={e => this.handleChange(e)}/>
                  </div>
                  <div>
-                     <span>password</span>
+                    <span>Password </span>
+                    <span style={errorStyle.passwordError}>
+                      Error: {this.props.errors.passwordError}
+                    </span>
                      <input 
                          name="password" 
                          type="password"

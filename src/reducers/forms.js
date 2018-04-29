@@ -1,39 +1,10 @@
-import { 
-  isSignupDataComplete, 
-  isSignupPasswordMatch, 
-  isLoginDataValid } from './_loginAndSignUp'
 import { isFileValid } from './_fileUpload'
 import { isExpensesDateValid, areItemsValid } from './_expenses'
 
 let defaultErrors = {
-  'signupError': null,
-  'loginError': null,
   'fileUploadError': null,
   'createExpensesError': null,
   'successfullySubmitedExpenses': null
-}
-
-const validateSignup = (email, password, repeat_password) => {
-  var error = null;
-  if (!isSignupDataComplete(email, password, repeat_password)) {
-    error = 'All fields should be filled'
-  }
-  else if (!isSignupPasswordMatch(password, repeat_password)) {
-    error = 'Password and repeated password should match'
-  }
-  return {
-    'signupError': error
-  }
-}
-
-const validateLogin = (email, password) => {
-  var error = null;
-  if (!isLoginDataValid(email, password)) {
-    error = 'All fields should be filled'
-  }
-  return {
-    'loginError': error
-  }
 }
 
 const validateFileUpload = (file) => {
@@ -66,12 +37,6 @@ const validateExpenses = (expenses) => {
 
 const forms = (state = defaultErrors, action) => {
   switch (action.type) {
-    case 'TRY_SIGNUP':
-      return Object.assign({}, state, validateSignup(
-        action.email, action.password, action.repeat_password))
-    case 'TRY_LOGIN':
-      return Object.assign({}, state, validateLogin(
-        action.email, action.password))
     case 'TRY_UPLOAD_FILE':
       return Object.assign(
         {}, state, 

@@ -3,11 +3,11 @@ import { trySignup } from 'actions'
 import SignupView from 'components/not-logged-in/SignupView'
 
 const mapStateToProps = (state, ownProps) => ({
-  error: state.forms.signupError,
+  errors: state.user.signupForm,
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: (email, password, repeate_password) => dispatch(trySignup(email, password, repeate_password))
+  onSubmit: (email, password, repeatPassword) => dispatch(trySignup(email, password, repeatPassword))
 })
 
 export default connect(
