@@ -1,22 +1,10 @@
-import { isFileValid } from './_fileUpload'
 import { isExpensesDateValid, areItemsValid } from './_expenses'
 
 let defaultErrors = {
-  'fileUploadError': null,
   'createExpensesError': null,
   'successfullySubmitedExpenses': null
 }
 
-const validateFileUpload = (file) => {
-  var error = null;
-  if (!isFileValid(file)) {
-    error = 'Please select a file'
-  }
-  return {
-    'fileUploadError': error
-  }
-
-}
 
 const validateExpenses = (expenses) => {
   var error = null;
@@ -37,10 +25,6 @@ const validateExpenses = (expenses) => {
 
 const forms = (state = defaultErrors, action) => {
   switch (action.type) {
-    case 'TRY_UPLOAD_FILE':
-      return Object.assign(
-        {}, state, 
-        validateFileUpload(action.file))
     case 'SUBMIT_EXPENSES':
       return Object.assign(
         {}, state, 

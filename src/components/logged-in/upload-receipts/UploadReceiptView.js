@@ -2,13 +2,21 @@ import React from 'react'
 import { withRouter } from 'react-router-dom';
 
 const UploadReceiptView = ({
-    error, onSubmit,
+    errors,
+    isUploading,
+    onSubmit,
     cleanSuccessfullyUploadedState,
     fileSuccessfullyUploaded,
     history
   }) => {
-  let errorStyle = {
-  	display: error? 'initial': 'none'
+
+  let errorStyles = {
+    imageError: {
+      display: errors.imageError? 'initial': 'none'
+    },
+    genericError: {
+      display: errors.genericError? 'initial': 'none'
+    }
   }
 
   let file
@@ -19,23 +27,25 @@ const UploadReceiptView = ({
   }
 
   return ( 
-  <div>
+    <div>
       <div>
           <span>Upload receipt</span>
       </div>
-      <div style={errorStyle}>
-          <span>Error: {error}</span>
-      </div>      
-      <form
+      {!isUploading && <form
          onSubmit={
            e => {
-             e.preventDefault();
-             onSubmit(file.value)
+             //e.preventDefault();
+             onSubmit(file.files[0])
              file.value = ''
            }
       }>
+        <div style={errorStyles.genericError}>
+          <span>Error: {errors.genericError}</span>
+        </div> 
         <div>
           <span>File</span>
+          <span style={errorStyles.imageError}>
+            Error: {errors.imageError}</span> 
           <input 
              name="receipt" 
              type="file" 
@@ -46,7 +56,9 @@ const UploadReceiptView = ({
             Upload
           </button>
         </div>
-      </form>
+      </form>}
+      {isUploading && <h2>Uploading...</h2>}
+
   </div>
   )
 }

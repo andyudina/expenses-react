@@ -1,5 +1,6 @@
 import fetch from 'cross-fetch'
 import { SERVER_URL } from 'app-constants'
+import { _getErrors } from 'actions/_utils'
 
 export const RECEIVE_USER_INFO = 'RECEIVE_USER_INFO'
 export const REQUEST_USER_INFO = 'REQUEST_USER_INFO'
@@ -90,22 +91,6 @@ function signupFailed(errors) {
     type: SIGNUP_FAILED,
     errors: errors
   }
-}
-
-function _getErrors(errorDict) {
-  // translate django errors dict
-  // to errors, undertandable by app
-  let errors = {}
-  for (var error in errorDict) {
-    if (error === 'non_field_errors') {
-      // django assumes that each field can have more tha one error
-      // it's not true for our app, so we just take first
-      errors['genericError'] = errorDict[error][0]
-    } else {
-      errors[error + 'Error'] = errorDict[error][0]
-    }
-  }
-  return errors
 }
 
 //TODO: refactor fetch boilerplate logic

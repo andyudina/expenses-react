@@ -1,16 +1,17 @@
 import { connect } from 'react-redux'
-import { tryUploadFile, cleanSuccessfullyUploadedState } from 'actions'
+import { attemptUploadFile, cleanSuccessfullyUploadedState } from 'actions/receipt'
 import UploadReceiptView from 'components/logged-in/upload-receipts/UploadReceiptView'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    error: state.forms.uploadError,
-    fileSuccessfullyUploaded: state.files.successfullyUploaded,
+    errors: state.receipt.uploadFileForm,
+    fileSuccessfullyUploaded: state.receipt.successfullyUploaded,
+    isUploading: state.receipt.isUploading,
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: (file) => dispatch(tryUploadFile(file)),
+  onSubmit: (file) => dispatch(attemptUploadFile(file)),
   cleanSuccessfullyUploadedState: () => dispatch(cleanSuccessfullyUploadedState())
 })
 
