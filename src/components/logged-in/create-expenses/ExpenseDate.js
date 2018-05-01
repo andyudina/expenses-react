@@ -1,7 +1,8 @@
 import React from 'react'
 
-const ExpenseDate = ({ date, onChange }) => (
+const ExpenseDate = ({ date, onChange, error }) => (
     <div>
+      {error && <span> {error} </span>}
       <input 
         type="date" 
         onChange={onChange}

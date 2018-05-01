@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { 
   addExpense, deleteExpense, 
-  setDate, changeExpense, submitExpenses} from 'actions'
+  setDate, changeExpense, attemtCreateExpensesForBill} from 'actions/expenses'
 import { setReceiptIdFromUrl } from 'actions/receipt'
 import CreateExpensesView from 'components/logged-in/create-expenses/CreateExpensesView'
 
@@ -9,8 +9,9 @@ const mapStateToProps = (state, ownProps) => ({
   date: state.receipt.expenses.date,
   parsedSuccessfully: state.receipt.parseStatus,
   expenses: state.receipt.expenses.expenses, 
-  error: state.forms.createExpensesError,
-  successMessage: state.forms.successfullySubmitedExpenses,
+  errors: state.receipt.expenses.expensesForm,
+  successfullyCreated: state.receipt.expenses.successfullyCreated,
+  isCreating: state.receipt.expenses.isCreating,
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -18,7 +19,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   deleteExpense: (index) => dispatch(deleteExpense(index)),
   setDate: (date) => dispatch(setDate(date)),
   changeExpense: (index, name, value) => dispatch(changeExpense(index, name, value)),
-  submitExpenses: (date, expenses) => dispatch(submitExpenses({date: date, expenses: expenses})),
+  submitExpenses: (receiptId, date, expenses) => dispatch(attemtCreateExpensesForBill(
+      receiptId, date, expenses)),
   saveReceiptIdFromUrl: (receiptId) => dispatch(setReceiptIdFromUrl(receiptId))
 })
 

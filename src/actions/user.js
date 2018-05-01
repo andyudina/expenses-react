@@ -166,7 +166,7 @@ function signUp(email, password) {
         }
       })
       .catch(err => {
-        dispatch(loginFailed(err.message))
+        dispatch(signupFailed(err.message))
       })
   }
 }

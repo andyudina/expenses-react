@@ -1,8 +1,22 @@
 // Defauls
 let defaultExpenses = {
-  'expenses': [
+  expenses: [
+    {
+      item: 'test',
+      quantity: 1,
+      amount: 10
+    }
   ],
-  'date': ''
+  date: '2018-10-10',
+  isCreating: false,
+  successfullyCreated: false,
+  expensesForm: {
+    genericError: false,
+    dateError: false,
+    itemsError: false,
+    // dict in format {itemIndex: {itemError, amountError, quantityError}}
+    itemsErrors: {}
+  }
 }
 
 let defaultReceipt = {
@@ -74,6 +88,29 @@ const _changeExpenses = (expenses, indexToChange, name, value) => {
   return changedExpenses 
 }
 
+const _validateExpenseCreation = (bill, date, items) => {
+  let errors = Object.assign({}, defaultExpenses.expensesForm)
+  if (!(bill)) {
+    console.log('No bill id dound -- mistery')
+    errors.genericError = 'Something went wrong. Please contact the support'
+  }
+  if (!(date)) {
+    errors.dateError = 'Date should be filled'
+  }
+  if ((!items) || items.length === 0) {
+    errors.itemsError = 'Items can not be empty'
+  }
+  for (var index in items) {
+    var item = items[index]
+    errors.itemsErrors[index] = {}
+    for (var key in item) {
+      if (!(item[key])) {
+        errors.itemsErrors[index][key] = 'This field should not be empty'
+      }
+    }
+  }
+  return errors
+}
 
 // receipt upload logic
 const verifyUploadFile = (file) => {
@@ -155,7 +192,8 @@ const receipt = (state = defaultReceipt, action) => {
       return Object.assign({}, state, {
         id: action.receiptId
       })
-    // related to expenses creaton
+
+    // modify expenses creation in a view
     case 'ADD_EXPENSE':
       return Object.assign(
         {}, state, 
@@ -209,7 +247,80 @@ const receipt = (state = defaultReceipt, action) => {
             }
           )
         })
-   
+
+    // create expenses
+    case 'VALIDATE_EXPENSES_CREATON':
+      return Object.assign(
+        {}, state, 
+        {
+          expenses: Object.assign(
+            {},
+            state.expenses,
+            {
+              isCreating: false,
+              successfullyCreated: false,
+              expensesForm: _validateExpenseCreation(
+                action.bill, action.date, action.items)
+            }
+          )
+        })
+
+    case 'START_EXPENSES_CREATION':
+      return Object.assign(
+        {}, state, 
+        {
+          expenses: Object.assign(
+            {},
+            state.expenses,
+            {
+              isCreating: true,
+              successfullyCreated: false,
+              expensesForm: Object.assign(
+                {},
+                defaultExpenses.expensesForm
+              )
+            }
+          )
+        })
+
+    case 'EXPENSES_CREATION_FAILED':
+      return Object.assign(
+        {}, state, 
+        {
+          expenses: Object.assign(
+            {},
+            state.expenses,
+            {
+              isCreating: false,
+              successfullyCreated: false,
+              expensesForm: Object.assign(
+                {},
+                state.expenses.expensesForm,
+                action.errors
+              )
+            }
+          )
+        })
+
+    case 'EXPENSES_CREATION_SUCCEEDED':
+      return Object.assign(
+        {}, state, 
+        {
+          expenses: Object.assign(
+            {},
+            state.expenses,
+            {
+              isCreating: false,
+              successfullyCreated: true,
+              expensesForm: {
+                genericError: false,
+                dateError: false,
+                itemsError: false,
+                itemsErrors: {}
+              }
+            }
+          )
+        })
     default:
       return state
   }

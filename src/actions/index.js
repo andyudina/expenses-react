@@ -5,36 +5,7 @@ export const switchToLoginOrSignup = (action) => ({
   action: action
 })
 
-export const tryUploadFile = (file) => ({
-  type: 'TRY_UPLOAD_FILE',
-  file: file,
-})
 
-export const addExpense = () => ({
-  type: 'ADD_EXPENSE',
-})
-
-export const deleteExpense = (key) => ({
-  type: 'REMOVE_EXPENSE',
-  key: key,
-})
-
-export const setDate = (date) => ({
-  type: 'SET_DATE',
-  date: date,
-})
-
-export const changeExpense = (index, name, value) => ({
-  type: 'CHANGE_EXPENSE',
-  index: index,
-  name: name,
-  value: value,
-})
-
-export const submitExpenses = (expenses) => ({
-  type: 'SUBMIT_EXPENSES',
-  expenses: expenses
-})
 
 export const switchToNewView = (action) => ({
   type: 'SWITCH_TO_NEW_VIEW',
