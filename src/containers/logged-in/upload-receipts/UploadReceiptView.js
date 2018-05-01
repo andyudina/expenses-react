@@ -4,6 +4,7 @@ import UploadReceiptView from 'components/logged-in/upload-receipts/UploadReceip
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    receiptId: state.receipt.id,
     errors: state.receipt.uploadFileForm,
     fileSuccessfullyUploaded: state.receipt.successfullyUploaded,
     isUploading: state.receipt.isUploading,

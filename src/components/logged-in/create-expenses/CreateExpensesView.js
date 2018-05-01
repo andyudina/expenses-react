@@ -1,10 +1,13 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom';
 import ExpenseDate from 'components/logged-in/create-expenses/ExpenseDate'
 import Expense from 'components/logged-in/create-expenses/Expense'
 
 const CreateExpensesView = ({
     date, 
-    expenses, 
+    expenses,
+    history,
+    parsedSuccessfully,
     error,
     successMessage,
     addExpense,
@@ -12,6 +15,8 @@ const CreateExpensesView = ({
     setDate,
     changeExpense,
     submitExpenses,
+    saveReceiptIdFromUrl,
+    match,
   }) => {
   let errorStyle = {
     'display': error? 'initial': 'none'
@@ -25,8 +30,22 @@ const CreateExpensesView = ({
     setDate(event.target.value);
   }
 
+  saveReceiptIdFromUrl(match.params.receiptId)
+
   return (
     <div>
+      {parsedSuccessfully &&
+        <div>
+        We manage to parse the receipt.
+        Please check if everything is correct
+        </div>
+      }
+      {!parsedSuccessfully &&
+        <div>
+        We failed to parse the receipt.
+        Please fill in expenses and select date
+        </div>
+      }
       <div style={errorStyle}>
         Error: {error}
       </div>
@@ -68,5 +87,5 @@ const CreateExpensesView = ({
     </div>)
 }
 
-export default CreateExpensesView;
+export default withRouter(CreateExpensesView);
 

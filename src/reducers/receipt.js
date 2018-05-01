@@ -1,3 +1,10 @@
+// Defauls
+let defaultExpenses = {
+  'expenses': [
+  ],
+  'date': ''
+}
+
 let defaultReceipt = {
   isUploading: false,
   successfullyUploaded: false,
@@ -7,9 +14,68 @@ let defaultReceipt = {
   },
   id: false,
   parseStatus: false,
-  spendings: false
+  expenses: defaultExpenses
 }
 
+// Expenses related logic
+export const _isExpensesDateValid = (date) => {
+  return (!!date)
+}
+
+export const _areItemsValid = (expenses) => {
+  for (var i in expenses) {
+    if ((!expenses[i].item) || (!expenses[i].quantity) || (!expenses[i].amount)) {
+      return false
+    }
+  }
+  return true
+}
+
+export const _isExpenseValid = (expense) => {
+  return _isExpensesDateValid(expense.date) && _areItemsValid(expense.expenses)
+}
+
+const _addExpenses = (expenses) => {
+  return [
+    ...expenses,
+    {
+      'item': '',
+      'quantity': 0,
+      'amount': 0
+    }
+  ]
+}
+
+const _removeExpenses = (expenses, indexToRemove) => {
+  let newExpenses = [];
+  for (let index = 0; index < expenses.length; index++) {
+    if (index !== indexToRemove) {
+      newExpenses.push(expenses[index])
+    }
+  }
+  return newExpenses
+}
+
+const _changeExpenses = (expenses, indexToChange, name, value) => {
+  let changedExpenses = [];
+  for (let index = 0; index < expenses.length; index++) {
+    if (index !== indexToChange) {
+        changedExpenses.push(expenses[index])
+    } else {
+      let expenseDiff = {}
+      expenseDiff[name] = value
+      let expense = Object.assign(
+          {}, 
+          expenses[index],
+          expenseDiff)
+      changedExpenses.push(expense)
+    }
+  }
+  return changedExpenses 
+}
+
+
+// receipt upload logic
 const verifyUploadFile = (file) => {
   if (file) {
     return {
@@ -25,8 +91,9 @@ const verifyUploadFile = (file) => {
 }
 
 
-const files = (state = defaultReceipt, action) => {
+const receipt = (state = defaultReceipt, action) => {
   switch (action.type) {
+    // related to receupt upload
     case 'VALIDATE_UPLOAD_FILE':
       return Object.assign(
         {},
@@ -76,15 +143,76 @@ const files = (state = defaultReceipt, action) => {
             {}, 
             defaultReceipt.uploadFileForm),
           id: action.receiptId,
-          spendings: action.spendings
+          expenses: action.spendings
         })
     case 'CLEAN_SUCCESSFULLY_UPLOADED_FILES':
       return Object.assign({}, state, {
         'successfullyUploaded': false
       })
+
+    // set receipt if from url
+    case 'SET_RECEIPT_ID_FROM_URL':
+      return Object.assign({}, state, {
+        id: action.receiptId
+      })
+    // related to expenses creaton
+    case 'ADD_EXPENSE':
+      return Object.assign(
+        {}, state, 
+        {
+          expenses: Object.assign(
+            {},
+            state.expenses,
+            {
+              expenses: _addExpenses(state.expenses.expenses)
+            }
+          )
+        })
+
+    case 'REMOVE_EXPENSE':
+      return Object.assign(
+        {}, state, 
+        {
+          expenses: Object.assign(
+            {},
+            state.expenses,
+            {
+              expenses: _removeExpenses(state.expenses.expenses, action.key)
+            }
+          )
+        })
+
+    case 'SET_DATE':
+      return Object.assign(
+        {}, state, 
+        {
+          expenses: Object.assign(
+            {},
+            state.expenses,
+            {
+              date: action.date
+            }
+          )
+        })
+
+    case 'CHANGE_EXPENSE':
+      return Object.assign(
+        {}, state, 
+        {
+          expenses: Object.assign(
+            {},
+            state.expenses,
+            {
+              expenses: _changeExpenses(
+                state.expenses.expenses, action.index, 
+                action.name, action.value)
+            }
+          )
+        })
+   
     default:
       return state
   }
 }
 
-export default files
+export default receipt

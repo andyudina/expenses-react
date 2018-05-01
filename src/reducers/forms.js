@@ -1,4 +1,4 @@
-import { isExpensesDateValid, areItemsValid } from './_expenses'
+//import { isExpensesDateValid, areItemsValid } from './_expenses'
 
 let defaultErrors = {
   'createExpensesError': null,
@@ -6,7 +6,7 @@ let defaultErrors = {
 }
 
 
-const validateExpenses = (expenses) => {
+/*const validateExpenses = (expenses) => {
   var error = null;
   var message = null;
   if (!(isExpensesDateValid(expenses.date))) {
@@ -21,14 +21,15 @@ const validateExpenses = (expenses) => {
     'createExpensesError': error,
     'successfullySubmitedExpenses': message
   }
-}
+}*/
 
 const forms = (state = defaultErrors, action) => {
   switch (action.type) {
     case 'SUBMIT_EXPENSES':
-      return Object.assign(
-        {}, state, 
-        validateExpenses(action.expenses))    
+      return state
+      //return Object.assign(
+      //  {}, state, 
+      //  validateExpenses(action.expenses))    
     default:
       return state
   }

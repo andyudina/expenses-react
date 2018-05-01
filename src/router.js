@@ -27,7 +27,7 @@ const Router = ({location}) => (
           component={UploadReceiptView} />
         <LoggedinRoute
           exact
-          path='/create-expenses'
+          path='/create-expenses/:receiptId'
           component={CreateExpensesView} />
         <LoggedinRoute
           exact

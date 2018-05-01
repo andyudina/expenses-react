@@ -2,6 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom';
 
 const UploadReceiptView = ({
+    receiptId,
     errors,
     isUploading,
     onSubmit,
@@ -23,7 +24,7 @@ const UploadReceiptView = ({
 
   if (fileSuccessfullyUploaded) {
     cleanSuccessfullyUploadedState();
-    history.push('/create-expenses');
+    history.push('/create-expenses/' + receiptId);
   }
 
   return ( 

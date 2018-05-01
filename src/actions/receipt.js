@@ -11,6 +11,7 @@ export const RECEIPT_UPLOADED_BUT_NOT_PARSED =
 export const RECEIPT_SUCCESSFULLY_UPLOADED = 'RECEIPT_SUCCESSFULLY_UPLOADED'
 export const CLEAN_SUCCESSFULLY_UPLOADED_FILES = 
   'CLEAN_SUCCESSFULLY_UPLOADED_FILES'
+export const SET_RECEIPT_ID_FROM_URL = 'SET_RECEIPT_ID_FROM_URL'
 
 const BASE_RECEIPT_API_URL = SERVER_URL + 'bills/'
 
@@ -59,13 +60,14 @@ function uploadFile(file) {
         } else if (response.status === 406) {
           // receipt uploaded but parsing failed
           response.json()
-            .then(json => dispatch(
-                receiptUploadedButParsingFailed(json.bill_id)))
+            .then(json => {
+                dispatch(
+                  receiptUploadedButParsingFailed(json.bill))})
         } else {
           response.json()
             .then(json => dispatch(
                 successfullyUploadedReceipt(
-                  json.bill_id, json.parsed_spendings)))
+                  json.bill, json.parsed_spendings)))
         }
       })
       .catch(err => {
@@ -94,5 +96,10 @@ export function attemptUploadFile(file) {
 
 export const cleanSuccessfullyUploadedState = () => ({
   type: CLEAN_SUCCESSFULLY_UPLOADED_FILES
+})
+
+export const setReceiptIdFromUrl = (receiptId) => ({
+  type: SET_RECEIPT_ID_FROM_URL,
+  receiptId: receiptId
 })
 
