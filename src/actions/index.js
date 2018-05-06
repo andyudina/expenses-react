@@ -12,12 +12,6 @@ export const switchToNewView = (action) => ({
   action: action
 })
 
-export const changeDateRange = (dateType, value) => ({
-  type: 'CHANGE_SPENDINGS_DATE_RANGE',
-  dateType: dateType,
-  value: value,
-})
-
 export const cleanSuccessfullyUploadedState = () => ({
   type: 'CLEAN_SUCCESSFULLY_UPLOADED_FILES'
 })

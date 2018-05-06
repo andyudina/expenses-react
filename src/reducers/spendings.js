@@ -1,53 +1,57 @@
 let defaultSpendings = {
-  'dateRange': {
-    'begin': '',
-    'end': ''
+  isFetching: false,
+  wasDateChanged: false,
+  dateRange: {
+    begin: '',
+    end: ''
   },
-  'expenses': {
-    'spendings': [
-      {
-        'name': 'Cottage cheese',
-        'total_amount': 56.2,
-        'total_quantity': 12,
-        'bills_number': 2,
-      },
-      {
-        'name': 'Bananas',
-        'total_amount': 18.13,
-        'total_quantity': 8,
-        'bills_number': 2,
-
-      },
-      {
-        'name': 'Apples',
-        'total_amount': 10.11,
-        'total_quantity': 2,
-        'bills_number': 1,
-
-      }
-    ],
-    'total': {
-      'total_bills_number': 2,
-      'total_quantity': 22,
-      'total_amount': 84.44
-    }
+  spendingsForm: {
+    genericError: false
+  },
+  expenses: {
+    spendings: [],
+    total: {}
   }
-};
+}
 
 const spendings = (state = defaultSpendings, action) => {
   switch (action.type) {
     case 'CHANGE_SPENDINGS_DATE_RANGE':
-      let dateRangeDiff = {};
-      dateRangeDiff[action.dateType] = action.value
-      let newDateRange = Object.assign(
-        {},
-        defaultSpendings.dateRange,
-        dateRangeDiff)
       return Object.assign(
         {},
         state, 
         {
-          'dateRange': newDateRange
+          dateRange: action.dateRange,
+          wasDateChanged: true
+        })
+    case 'START_FETCHING_SPENDINGS':
+      return Object.assign(
+        {},
+        state,
+        {
+          isFetching: true,
+          wasDateChanged: false,
+          spendingsForm: Object.assign({}, state.spendingsForm)
+        })
+
+    case 'FETCHING_SPENDINGS_FAILED':
+      return Object.assign(
+        {},
+        state,
+        {
+          isFetching: false,
+          wasDateChanged: false,
+          spendingsForm: action.errors
+        })
+    case 'FETCHING_SPENDINGS_SUCCEEDED':
+      return Object.assign(
+        {},
+        state,
+        {
+          isFetching: false,
+          wasDateChanged: false,
+          spendingsForm: Object.assign({}, state.spendingsForm),
+          expenses: action.spendings
         })
     default:
       return state
