@@ -22,7 +22,7 @@ function _canCreateExpenses(bill, date, items) {
   }
   for (var i in items) {
     var item = items[i]
-    if ((!item.item) || (!item.quantity) || (!item.amount)) {
+    if ((!item.name) || (!item.quantity) || (!item.amount)) {
       return false
     }
   }
@@ -42,11 +42,12 @@ const successfullyCreatedExpenses = () => ({
   type: EXPENSES_CREATION_SUCCEEDED,
 })
 
-function createExpensesForBill(bill, date, items) {
+function createExpensesForBill(receiptId, date, items) {
   // create expenses on remote server
   return (dispatch) => {
+    let url = BASE_EXPENSES_API_URL + receiptId + '/'
     dispatch(startCreatingExpensesForBill())
-    return fetch(BASE_EXPENSES_API_URL, {
+    return fetch(url, {
       method: 'post',
       credentials: 'include',
       headers: {
@@ -54,7 +55,6 @@ function createExpensesForBill(bill, date, items) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        bill: bill,
         // api endpoiint needs datetime, not date
         // TODO: refactor this shit
         date: date + ' 00:00:00',
@@ -122,3 +122,53 @@ export const changeExpense = (index, name, value) => ({
   name: name,
   value: value,
 })
+
+// Fetch expenses for receipt
+export const SUCCESSFULLY_FETCHED_EXPENSES_FOR_RECEIPT = 
+  'SUCCESSFULLY_FETCHED_EXPENSES_FOR_RECEIPT'
+export const FETCHED_EXPENSES_FAILED_FOR_RECEIPT = 
+  'FETCHED_EXPENSES_FAILED_FOR_RECEIPT'
+export const START_FETCHiNG_EXPENSES_FOR_RECEIPT =
+  'START_FETCHiNG_EXPENSES_FOR_RECEIPT'
+
+
+const startFetchingExpenses = () => ({
+  type: START_FETCHiNG_EXPENSES_FOR_RECEIPT,
+})
+
+const successfullyFetchedExpenses = (expenses) => ({
+  type: SUCCESSFULLY_FETCHED_EXPENSES_FOR_RECEIPT,
+  expenses: expenses
+})
+
+const expensesFetchingFailed = (errors) => ({
+  type: FETCHED_EXPENSES_FAILED_FOR_RECEIPT,
+  errors: errors
+})
+
+export function fetchExpensesForReceipt(receiptId) {
+  return (dispatch) => {
+    dispatch(startFetchingExpenses())
+    let url = BASE_EXPENSES_API_URL + receiptId + '/'
+    return fetch(url, {
+      method: 'get',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+      },
+    })
+    .then(response => {
+        console.log(response)
+        if (response.status >= 400) {
+          // unknown error occured
+          throw new Error('Unknown error. Please contact the support')
+        } else {
+          response.json()
+            .then(json => dispatch(successfullyFetchedExpenses(json)))
+        }
+      })
+      .catch(err => {
+        dispatch(expensesFetchingFailed({genericError: err.message}))
+      })
+  }
+}

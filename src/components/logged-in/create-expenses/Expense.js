@@ -2,17 +2,17 @@ import React from 'react'
 
 const Expense = (
         { 
-          item, amount, 
+          name, amount, 
           quantity, onDelete, 
           onChange, errors
         }
     ) => (
     <div>
-      {errors.item && <span> {errors.item} </span>}
+      {errors.name && <span> {errors.name} </span>}
       <input 
          type="text" 
-         name="item" 
-         value={item}
+         name="name" 
+         value={name}
          onChange={(e) => onChange(e)}/>
       {errors.amount && <span> {errors.amount} </span>}
       <input 

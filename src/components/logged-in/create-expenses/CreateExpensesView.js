@@ -1,73 +1,62 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import ExpenseDate from 'components/logged-in/create-expenses/ExpenseDate'
 import Expense from 'components/logged-in/create-expenses/Expense'
 
-const CreateExpensesView = ({
-    date, 
-    expenses,
-    history,
-    parsedSuccessfully,
-    errors,
-    successfullyCreated,
-    isCreating,
-    addExpense,
-    deleteExpense,
-    setDate,
-    changeExpense,
-    submitExpenses,
-    saveReceiptIdFromUrl,
-    match,
-  }) => {
+class CreateExpensesView extends Component {
 
-  let handleDateChange = (event) => {
-    setDate(event.target.value);
+  constructor(props) {
+    super(props)
+    this.handleDateChange = this.handleDateChange.bind(this)
   }
 
-  return (
+  componentDidMount() {
+    this.props.fetchExpensesForReceipt(
+      this.props.match.params.receiptId);
+  }
+
+  handleDateChange = (event) => {
+    this.props.setDate(event.target.value);
+  }
+
+  render() {
+    if (this.props.isFetching && this.props.isCreating) {
+      // debug random problems
+      console.log('This should be imposible')
+    }
+
+    return (
     <div>
-      {!isCreating &&
+      {!this.props.isCreating && !this.props.isFetching &&
         <div>
-          {parsedSuccessfully &&
-          <div>
-            We manage to parse the receipt.
-            Please check if everything is correct
-          </div>}
-      
-          {!parsedSuccessfully &&
-          <div>
-            We failed to parse the receipt.
-            Please fill in expenses and select date
-          </div>}
-      
-          {errors.genericError && 
+          {this.props.errors.genericError && 
           <span>
-            {errors.genericError}
+            {this.props.errors.genericError}
           </span>}
 
-          {successfullyCreated &&
+          {this.props.successfullyCreated &&
           <span>
             Successfully created
           </span>}
 
           <ExpenseDate
-            error={errors.dateError}
-            onChange={handleDateChange} 
-            date={date}/>
+            error={this.props.errors.dateError}
+            onChange={this.handleDateChange} 
+            date={this.props.date}/>
           <div>
 
             <ul>
-              {expenses.map((expense, index) =>
+              {this.props.expenses.map((expense, index) =>
               <Expense
-                errors={(errors.itemsErrors[index] || {})}
+                errors={(this.props.errors.itemsErrors[index] || {})}
                 onDelete={
                   () => {
-                    deleteExpense(index)
+                    this.props.deleteExpense(index)
                   }
                 }
                 onChange={
                   (e) => {
-                    changeExpense(
+                    this.props.changeExpense(
                     index, e.target.name, e.target.value)
                   }
                 }
@@ -76,16 +65,19 @@ const CreateExpensesView = ({
               />)}
             </ul>
           </div>
-          <button onClick={addExpense}>
+          <button onClick={this.props.addExpense}>
             Add expense
           </button>
-          <button onClick={() => submitExpenses(
-            match.params.receiptId, date, expenses)}>
+          <button onClick={() => this.props.submitExpenses(
+            this.props.match.params.receiptId, 
+            this.props.date, this.props.expenses)}>
             Submit
           </button>
         </div>}
-    {isCreating && <h2>Creating...</h2>}
+    {this.props.isCreating && !this.props.isFetching && <h2>Creating...</h2>}
+    {!this.props.isCreating && this.props.isFetching && <h2>Fetching...</h2>}
     </div>)
+  }
 }
 
 export default withRouter(CreateExpensesView);

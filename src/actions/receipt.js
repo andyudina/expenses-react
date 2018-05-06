@@ -6,8 +6,6 @@ import { _getErrors } from 'actions/_utils'
 export const VALIDATE_UPLOAD_FILE = 'VALIDATE_UPLOAD_FILE'
 export const START_RECEIPT_UPLOAD= 'START_RECEIPT_UPLOAD'
 export const RECEIPT_UPLOAD_FAILED = 'RECEIPT_UPLOAD_FAILED'
-export const RECEIPT_UPLOADED_BUT_NOT_PARSED = 
-  'RECEIPT_UPLOADED_BUT_NOT_PARSED'
 export const RECEIPT_SUCCESSFULLY_UPLOADED = 'RECEIPT_SUCCESSFULLY_UPLOADED'
 export const CLEAN_SUCCESSFULLY_UPLOADED_FILES = 
   'CLEAN_SUCCESSFULLY_UPLOADED_FILES'
@@ -19,11 +17,6 @@ const BASE_RECEIPT_API_URL = SERVER_URL + 'bills/'
 const receiptUploadFailed = (errors) => ({
   type: RECEIPT_UPLOAD_FAILED,
   errors: errors
-})
-
-const receiptUploadedButParsingFailed = (receiptId) => ({
-  type: RECEIPT_UPLOADED_BUT_NOT_PARSED,
-  receiptId: receiptId
 })
 
 const successfullyUploadedReceipt = (receiptId, spendings) => ({
@@ -50,19 +43,13 @@ function uploadFile(file) {
     .then(
       response => {
         console.log(response)
-        if (response.status > 400 && response.status !== 406) {
+        if (response.status > 400) {
           // unknown error occured
           throw new Error('Unknown error. Please contact the support')
         } else if (response.status === 400) {
           // server send valid error
           response.json()
             .then(json => dispatch(receiptUploadFailed(_getErrors(json))))
-        } else if (response.status === 406) {
-          // receipt uploaded but parsing failed
-          response.json()
-            .then(json => {
-                dispatch(
-                  receiptUploadedButParsingFailed(json.bill))})
         } else {
           response.json()
             .then(json => dispatch(
