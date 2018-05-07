@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => ({
   errors: state.expensesForReceipt.expensesForm,
   successfullyCreated: state.expensesForReceipt.successfullyCreated,
   isCreating: state.expensesForReceipt.isCreating,
-  isFetching:  state.expensesForReceipt.isCreating,
+  isFetching: state.expensesForReceipt.isFetching,
 
 })
 
