@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { 
   addExpense, deleteExpense, 
-  setDate, changeExpense, attemtCreateExpensesForBill,
+  setDate, changeExpense, attemtCreateExpensesForreceipt,
   fetchExpensesForReceipt} from 'actions/expenses'
 import { setReceiptIdFromUrl } from 'actions/receipt'
 import CreateExpensesView from 'components/logged-in/create-expenses/CreateExpensesView'
@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   deleteExpense: (index) => dispatch(deleteExpense(index)),
   setDate: (date) => dispatch(setDate(date)),
   changeExpense: (index, name, value) => dispatch(changeExpense(index, name, value)),
-  submitExpenses: (receiptId, date, expenses) => dispatch(attemtCreateExpensesForBill(
+  submitExpenses: (receiptId, date, expenses) => dispatch(attemtCreateExpensesForreceipt(
       receiptId, date, expenses)),
   fetchExpensesForReceipt: (receiptId) => dispatch(
     fetchExpensesForReceipt(receiptId)),

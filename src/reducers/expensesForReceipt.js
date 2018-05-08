@@ -74,10 +74,10 @@ const _changeExpenses = (expenses, indexToChange, name, value) => {
   return changedExpenses 
 }
 
-const _validateExpenseCreation = (bill, date, items) => {
+const _validateExpenseCreation = (receipt, date, items) => {
   let errors = Object.assign({}, defaultExpenses.expensesForm)
-  if (!(bill)) {
-    console.log('No bill id dound -- mistery')
+  if (!(receipt)) {
+    console.log('No receipt id dound -- mistery')
     errors.genericError = 'Something went wrong. Please contact the support'
   }
   if (!(date)) {
@@ -184,7 +184,7 @@ const expensesForReceipt = (state = defaultExpenses, action) => {
             isCreating: false,
             successfullyCreated: false,
             expensesForm: _validateExpenseCreation(
-              action.bill, action.date, action.items)
+              action.receipt, action.date, action.items)
         })
 
     case 'START_EXPENSES_CREATION':

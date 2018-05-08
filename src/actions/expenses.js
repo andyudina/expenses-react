@@ -1,4 +1,4 @@
-// Upload expenses linked to a bill
+// Upload expenses linked to a receipt
 import fetch from 'cross-fetch'
 import { SERVER_URL } from 'app-constants'
 import { _getErrors } from 'actions/_utils'
@@ -12,9 +12,9 @@ export const EXPENSES_CREATION_SUCCEEDED = 'EXPENSES_CREATION_SUCCEEDED'
 const BASE_EXPENSES_API_URL = SERVER_URL + 'spendings/'
 
 
-function _canCreateExpenses(bill, date, items) {
+function _canCreateExpenses(receipt, date, items) {
   // validate if expenses data is valid
-  if ((!bill) || (!date) || (!items)) {
+  if ((!receipt) || (!date) || (!items)) {
     return false
   }
   if (items.length === 0) {
@@ -29,7 +29,7 @@ function _canCreateExpenses(bill, date, items) {
   return true
 }
 
-const startCreatingExpensesForBill = () => ({
+const startCreatingExpensesForReceipt = () => ({
   type: START_EXPENSES_CREATION,
 })
 
@@ -42,11 +42,11 @@ const successfullyCreatedExpenses = () => ({
   type: EXPENSES_CREATION_SUCCEEDED,
 })
 
-function createExpensesForBill(receiptId, date, items) {
+function createExpensesForreceipt(receiptId, date, items) {
   // create expenses on remote server
   return (dispatch) => {
     let url = BASE_EXPENSES_API_URL + receiptId + '/'
-    dispatch(startCreatingExpensesForBill())
+    dispatch(startCreatingExpensesForReceipt())
     return fetch(url, {
       method: 'post',
       credentials: 'include',
@@ -80,25 +80,25 @@ function createExpensesForBill(receiptId, date, items) {
   }
 }
 
-const validateExpensesCreation = (bill, date, items) => ({
+const validateExpensesCreation = (receipt, date, items) => ({
   // send action to validate if expenses can be created
   type: VALIDATE_EXPENSES_CREATON,
-  bill: bill,
+  receipt: receipt,
   date: date,
   items: items,
 })
 
 
-export function attemtCreateExpensesForBill(
-    bill, date, items
+export function attemtCreateExpensesForreceipt(
+    receipt, date, items
   ) {
-  // attempt create expenses for bill
+  // attempt create expenses for receipt
   return (dispatch) => {
-    dispatch(validateExpensesCreation(bill, date, items))
-    if (!(_canCreateExpenses(bill, date, items))) {
+    dispatch(validateExpensesCreation(receipt, date, items))
+    if (!(_canCreateExpenses(receipt, date, items))) {
       return
     }
-    dispatch(createExpensesForBill(bill, date, items))
+    dispatch(createExpensesForreceipt(receipt, date, items))
   }
 }
 
